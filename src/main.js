@@ -53,9 +53,16 @@ function capitalizeFirstLetter(str) {
 }
 
 
-
-document.getElementById("background-color-changer").addEventListener("click", e => {
+function applyRandomBackgroundColor() {
     const randomColor = getRandomColor()
+
+    // Updating the background color of the HTML body and updating the text value in the element with color info 
     document.body.style.backgroundColor = randomColor
-    console.log(capitalizeFirstLetter(randomColor))
-})
+    document.getElementById("background-color-value-txt").textContent = capitalizeFirstLetter(randomColor)
+}
+
+
+
+applyRandomBackgroundColor() // Generating and applying the random background color on the first page load
+
+document.getElementById("background-color-changer-btn").addEventListener("click", applyRandomBackgroundColor)

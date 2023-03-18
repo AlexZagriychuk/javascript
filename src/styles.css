@@ -1,0 +1,48 @@
+#main {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+.background-color-info {
+	border-radius: 10px;
+	padding: 15px;
+
+	background-color: black;
+	color: white;
+	
+	font-size: 40px;
+	font-weight: bold;
+	text-align: center; /* only necessary if a browser width is very low */
+}
+
+#background-color-changer-btn {
+	display: block;
+	cursor: pointer;
+
+	margin: 20px auto 0px;
+	padding: 10px 20px;
+	border: 3px solid black;
+	border-radius: 10px;
+
+	background: none;
+
+	font: inherit;
+	font-size: 16px;
+	font-weight: bold;
+	text-transform: uppercase;
+
+	transition: 0.5s;
+}
+
+#background-color-changer-btn:hover {
+	background-color: black;
+	color: white;
+}
+
+
+#background-color-value-txt {
+	color: #479DE5;
+}
