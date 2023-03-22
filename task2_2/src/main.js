@@ -52,23 +52,23 @@ function verifyPageElementsAttributes() {
     const allowedFoodTypeBtnIds = ["food-type-all", ...allowedFoodTypes.map(foodType => "food-type-" + foodType)]
     let foodTypeButtons = Array.from(document.querySelectorAll(".food-type-btn"))
     if(foodTypeButtons.length == 0) {
-        throw new Error("No elements with selector '.food-type-btn' are present on the page (buttons to control which menu items to display)")
+        console.error("No elements with selector '.food-type-btn' are present on the page (buttons to control which menu items to display)")
     }
     foodTypeButtons.forEach(foodTypeButton => {
         if(!allowedFoodTypeBtnIds.includes(foodTypeButton.id.toLowerCase())) {
-            throw new Error(`Element with selector '.food-type-btn' does not have one of the allowed 'id' values [${allowedFoodTypeBtnIds}] (actual ID value is '${foodTypeButton.id}')`)
+            console.error(`Element with selector '.food-type-btn' does not have one of the allowed 'id' values [${allowedFoodTypeBtnIds}] (actual ID value is '${foodTypeButton.id}')`)
         }
     })
 
     // Every '.menu-item' element must have 'data-food-type' attribute with one of the allowedFoodTypes
     let menuItems = Array.from(document.querySelectorAll(".menu-item"))
     if(menuItems.length == 0) {
-        throw new Error("No elements with selector '.menu-item' are present on the page (no menu items to display)")
+        console.error("No elements with selector '.menu-item' are present on the page (no menu items to display)")
     }
     menuItems.forEach(menuItem => {
         let menuItemDataFoodType = menuItem.getAttribute("data-food-type")
         if(menuItemDataFoodType == null || !allowedFoodTypes.includes(menuItemDataFoodType.toLowerCase())) {
-            throw new Error(`Element with selector '.menu-item' does not have one of the required 'data-food-type' values [${allowedFoodTypes}] (actual 'data-food-type' value is '${menuItemDataFoodType}')`)
+            console.error(`Element with selector '.menu-item' does not have one of the required 'data-food-type' values [${allowedFoodTypes}] (actual 'data-food-type' value is '${menuItemDataFoodType}')`)
         }
     })
 }
