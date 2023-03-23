@@ -1,0 +1,153 @@
+body {
+	background-color: #EFF2F7;
+}
+
+#menu {
+	margin: auto;
+	max-width: 1300px;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.menu-header {
+	margin: 40px auto;
+}
+
+h2 {
+	font-size: 50px;
+	font-weight: bold;
+	color: #192134;
+	position: relative;
+	margin: auto auto 20px auto;
+}
+
+h2:after {
+	content: "";
+	position: absolute;
+	left: 25%;
+	width: 50%;
+	bottom: -10px;
+	border-bottom: 5px solid #BA9B6F;
+}
+
+.food-type-buttons {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 5px 10px;
+	/* Only needed for a low viewport width when buttons occupy multiple rows */
+	justify-content: center;
+}
+
+.food-type-btn {
+	cursor: pointer;
+
+	padding: 5px 15px;
+	border: 3px solid #BA9B6F;
+	border-radius: 10px;
+	box-shadow: 1px 1px black;
+
+	background: none;
+
+	font: inherit;
+	font-size: 20px;
+	font-weight: bold;
+	color: #BA9B6F;
+
+	transition: 0.3s;
+}
+
+.food-type-btn:hover {
+	background-color: #BA9B6F;
+	color: white;
+}
+
+.menu-items {
+	margin-top: 70px;
+
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 40px;
+}
+
+.menu-item {
+	display: flex;
+}
+
+.menu-item-pic {
+	flex-basis: 40%;
+}
+
+.menu-item-info {
+	margin-left: 5%;
+	flex-basis: 55%;
+}
+
+.menu-item-pic img {
+	width: 100%;
+	height: 200px;
+	object-fit: cover;
+
+	border: 4px solid #BA9B6F;
+	border-radius: 10px;
+}
+
+.menu-item-name-and-price {
+	display: flex;
+	position: relative; /* for the "underline" .menu-item-name-and-price:after */
+	
+	font-size: 20px;
+	font-weight: bolder;
+	letter-spacing: 3px;
+}
+
+.menu-item-name-and-price:after {
+	content: "";
+	position: absolute;
+	width: 100%;
+	left: 0;
+	bottom: -5px;
+	border-bottom: 1px solid #C3C6CD;
+}
+
+.menu-item-name {
+	color: #353C47;
+}
+
+.menu-item-price {
+	margin-left: auto; /* align element on the right side of the flex container */
+
+	color: #BA9B6F;
+}
+
+.menu-item-description {
+	margin-top: 20px;
+
+	font-size: 18px;
+	color: #727885;
+}
+
+
+@media screen and (max-width: 1024px) {
+	#menu {
+		margin: auto 10px;
+	}
+
+	.menu-header {
+		margin: 20px auto 30px;
+	}
+
+	.food-type-buttons {
+		gap: 5px 5px;
+	}
+
+	.menu-items {
+		grid-template-columns: 1fr;
+	}
+
+	.menu-item-name-and-price {
+		letter-spacing: 2px;
+	}
+}
