@@ -23,6 +23,9 @@ function generateArrWithRandomInts(arrLength, minIntValue, maxIntValue) {
 }
 
 function generateAndSortArrays(sortingAlgosArr, numberOfArraysToGenerate, arrayLength, maxIntValue) {
+    // Making sure elapsedTimes for all algorithms are empty before re-running the arrays generation and sorting process 
+    sortingAlgosArr.forEach(sortingAlgo => sortingAlgo.elapsedTimes = [])
+    
     for(let i = 0; i < numberOfArraysToGenerate; i++) {
         // Generating an array which every sorting algo will sort
         let generatedArr = generateArrWithRandomInts(arrayLength, 1, maxIntValue)
@@ -42,8 +45,16 @@ function generateAndSortArrays(sortingAlgosArr, numberOfArraysToGenerate, arrayL
     }
 }
 
+function isNumeric(str) {
+    if (typeof str != "string") return false // we only process strings!  
+    return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+           !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
+}
+
 function verifyInputParamIsPositiveInteger(inputParamName, inputParamValue) {
-    if(!Number.isInteger(inputParamValue) || inputParamValue < 1) {
+    // using parseFloat because if the string is an integer it will still be parsed as integer and the Number.isInteger will return true
+    // but if the value is a float then it will be parsed to float without rounding and the Number.isInteger will return false
+    if(!isNumeric(inputParamValue) || !Number.isInteger(parseFloat(inputParamValue)) || parseInt(inputParamValue) < 1) {
         throw new Error(`Parameter '${inputParamName}' has value '${inputParamValue}' which is not a positive integer`)
     }
 }
@@ -67,10 +78,14 @@ function verifyTheExperimentInputParams(numberOfArraysToGenerate, arrayLength, m
 function runTheSortingExperiment(sortingAlgosArr, numberOfArraysToGenerate, arrayLength, maxIntValue) {
     let experimentResultsMsgs = []
     
+    // Verifying input parameters while they are strings and then parsing them to int (because validation can only pass if they are integers)
     verifyTheExperimentInputParams(numberOfArraysToGenerate, arrayLength, maxIntValue)
+    numberOfArraysToGenerate = parseInt(numberOfArraysToGenerate)
+    arrayLength = parseInt(arrayLength)
+    maxIntValue = parseInt(maxIntValue)
 
     console.log("------------------------------------")
-    let inputParamsInfo = `Sorting algorithms time estimation experiment inputs: number of arrays generated = ${ARRAYS_COUNT}, number of elements in each array = ${ARR_LENGTH}, range of random integers used as elements of arrays = 1 to ${MAX_VALUE}.`
+    let inputParamsInfo = `Sorting algorithms time estimation experiment inputs: number of arrays generated = ${numberOfArraysToGenerate}, number of elements in each array = ${arrayLength}, range of random integers used as elements of arrays = 1 to ${maxIntValue}.`
     experimentResultsMsgs.push(inputParamsInfo)
     console.log(inputParamsInfo)
     console.log("------------------------------------")
@@ -99,10 +114,6 @@ function runTheSortingExperiment(sortingAlgosArr, numberOfArraysToGenerate, arra
 }
 
 
-const ARRAYS_COUNT = 10
-const ARR_LENGTH  = 10_000
-const MAX_VALUE = 1_000_000
-
 const SORTING_ALGOS = [
     {"algorithm": BubbleSort, "elapsedTimes": []},
     {"algorithm": SelectionSort, "elapsedTimes": []},
@@ -112,13 +123,17 @@ const SORTING_ALGOS = [
     {"algorithm": MergeSort, "elapsedTimes": []},
 ]
 
-document.getElementById("run-experiment").addEventListener("click", event => {
+document.getElementById("run-experiment").addEventListener("click", event => {    
     let statusMsgElem = document.getElementById("status-message")
-    //ToDo: figure out why this text is not appearing in the "status-message" elem while the experiment is running
+    //ToDo: figure out why these changes are not appearing in the "status-message" elem while the experiment is running
     statusMsgElem.textContent = "Running the experiment..."
 
     try {
-        let experimentResults = runTheSortingExperiment(SORTING_ALGOS, ARRAYS_COUNT, ARR_LENGTH, MAX_VALUE)
+        let numberOfArraysToGenerate = document.getElementById("numberOfArraysToGenerate").value
+        let arrayLength = document.getElementById("arrayLength").value
+        let maxIntValue = document.getElementById("maxIntValue").value
+
+        let experimentResults = runTheSortingExperiment(SORTING_ALGOS, numberOfArraysToGenerate, arrayLength, maxIntValue)
         statusMsgElem.textContent = experimentResults.join("\n")
     } catch(error) {
         statusMsgElem.textContent = error.message

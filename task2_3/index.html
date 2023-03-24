@@ -23,6 +23,21 @@
                 <p>Average elapsed sorting time will be calculated for each sorting algorithm.</p>
             </div>
 
+            <div class="input-values">
+                <div>
+                    <label for="#arrayLength">arrayLength (number of elements in each array)</label>
+                    <input id="arrayLength" type="text" value="10000">
+                </div>
+                <div>
+                    <label for="#numberOfArraysToGenerate">numberOfArraysToGenerate (number of arrays to generate)</label>
+                    <input id="numberOfArraysToGenerate" type="text" value="10">
+                </div>
+                <div>
+                    <label for="#maxIntValue">maxIntValue (value of each array element will be between 1 and this value)</label>
+                    <input id="maxIntValue" type="text" value="1000000">
+                </div>
+            </div>
+
             <div class="controls">
                 <button id="run-experiment">Run the sorting experiment</button>
                 <div class="multiline" id="status-message"></div>
