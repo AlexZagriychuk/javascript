@@ -7,7 +7,26 @@
 
     <body>
         <section id="main">
-            <div>Placeholder text</div>
+            <h2>Sorting time complexity experiment</h2>
+
+            <div class="intro">
+                <p>This sorting experiment will generate the specified number of arrays with each array having specified number of elements.</p>
+                <p>Every generated array will be sorted using each of the following algorithms:</p>
+                <ul>
+                    <li>BubbleSort</li>
+                    <li>SelectionSort</li>
+                    <li>InsertionSort</li>
+                    <li>QuickSort</li>
+                    <li>QuickSortInPlace</li>
+                    <li>MergeSort</li>
+                </ul>
+                <p>Average elapsed sorting time will be calculated for each sorting algorithm.</p>
+            </div>
+
+            <div class="controls">
+                <button id="run-experiment">Run the sorting experiment</button>
+                <div class="multiline" id="status-message"></div>
+            </div>
         </section>
 
         <script type="module" src="src/main.js"></script>
