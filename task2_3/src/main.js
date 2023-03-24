@@ -123,23 +123,28 @@ const SORTING_ALGOS = [
     {"algorithm": MergeSort, "elapsedTimes": []},
 ]
 
-document.getElementById("run-experiment").addEventListener("click", event => {    
+document.getElementById("run-experiment").addEventListener("click", async (event) => {    
     let statusMsgElem = document.getElementById("status-message")
-    //ToDo: figure out why these changes are not appearing in the "status-message" elem while the experiment is running
     statusMsgElem.textContent = "Running the experiment..."
     statusMsgElem.style.color = "blue"
 
-    try {
-        let numberOfArraysToGenerate = document.getElementById("numberOfArraysToGenerate").value
-        let arrayLength = document.getElementById("arrayLength").value
-        let maxIntValue = document.getElementById("maxIntValue").value
-
-        let experimentResults = runTheSortingExperiment(SORTING_ALGOS, numberOfArraysToGenerate, arrayLength, maxIntValue)
-        statusMsgElem.textContent = experimentResults.join("\n")
-
-        statusMsgElem.style.color = "green"
-    } catch(error) {
-        statusMsgElem.textContent = error.message
-        statusMsgElem.style.color = "red"
-    }
+    // Wrapping the experiment execution in Promise and setTimeout to make sure the previous message "Running the experiment..." has time to be rendered
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            try{
+                let numberOfArraysToGenerate = document.getElementById("numberOfArraysToGenerate").value
+                let arrayLength = document.getElementById("arrayLength").value
+                let maxIntValue = document.getElementById("maxIntValue").value
+        
+                let experimentResults = runTheSortingExperiment(SORTING_ALGOS, numberOfArraysToGenerate, arrayLength, maxIntValue)
+                statusMsgElem.textContent = experimentResults.join("\n")
+                statusMsgElem.style.color = "green"
+            } catch(error) {
+                statusMsgElem.textContent = error.message
+                statusMsgElem.style.color = "red"
+            }
+            
+            resolve()
+        }, 10)
+    })
 })
