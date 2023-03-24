@@ -127,6 +127,7 @@ document.getElementById("run-experiment").addEventListener("click", event => {
     let statusMsgElem = document.getElementById("status-message")
     //ToDo: figure out why these changes are not appearing in the "status-message" elem while the experiment is running
     statusMsgElem.textContent = "Running the experiment..."
+    statusMsgElem.style.color = "blue"
 
     try {
         let numberOfArraysToGenerate = document.getElementById("numberOfArraysToGenerate").value
@@ -135,7 +136,10 @@ document.getElementById("run-experiment").addEventListener("click", event => {
 
         let experimentResults = runTheSortingExperiment(SORTING_ALGOS, numberOfArraysToGenerate, arrayLength, maxIntValue)
         statusMsgElem.textContent = experimentResults.join("\n")
+
+        statusMsgElem.style.color = "green"
     } catch(error) {
         statusMsgElem.textContent = error.message
+        statusMsgElem.style.color = "red"
     }
 })
