@@ -1,0 +1,68 @@
+body {
+	font-family: cursive;
+}
+
+#main {
+	max-width: 1000px;
+	margin: auto;
+	padding: 10px;
+}
+
+h2 {
+	margin: 30px;
+	text-align: center;
+}
+
+h3 {
+	text-align: center;
+}
+
+.input-values {
+	max-width: fit-content;
+	margin: 40px auto;
+}
+
+.input-value {
+	margin-top: 5px;
+
+	display: flex;
+	justify-content: space-between;
+}
+
+.input-value input {
+	margin-left: 15px;
+	font-family: inherit;
+}
+
+input:focus {
+	outline-color: lightblue;
+}
+
+button {
+	cursor: pointer;
+
+	padding: 5px 15px;
+	border: 3px solid black;
+	border-radius: 10px;
+
+	background: none;
+
+	font: inherit;
+	font-size: 20px;
+	font-weight: bold;
+
+	transition: 0.3s;
+}
+
+button:hover {
+	background-color: lightblue;
+}
+
+#run-experiment {
+	display: block;
+	margin: 30px auto;
+}
+
+.multiline {
+	white-space: pre-wrap;
+}

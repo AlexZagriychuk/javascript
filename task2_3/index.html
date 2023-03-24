@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Task 2.3 (Sort an array in different ways)</title>
+        <link rel="stylesheet" type="text/css" href="src/styles.css">
+    </head>
+
+    <body>
+        <section id="main">
+            <h2>Sorting time complexity experiment</h2>
+
+            <div class="intro">
+                <p>This sorting experiment will generate the specified number of arrays with each array having specified number of elements.</p>
+                <p>Every generated array will be sorted using each of the following algorithms:</p>
+                <ul>
+                    <li>BubbleSort</li>
+                    <li>SelectionSort</li>
+                    <li>InsertionSort</li>
+                    <li>QuickSort</li>
+                    <li>QuickSortInPlace</li>
+                    <li>MergeSort</li>
+                </ul>
+                <p>Average elapsed sorting time will be calculated for each sorting algorithm.</p>
+            </div>
+
+            <div class="input-values">
+                <h3>Input parameters:</h3>
+                <div class="input-value">
+                    <label for="#arrayLength">arrayLength (number of elements in each array)</label>
+                    <input id="arrayLength" type="text" value="10000">
+                </div>
+                <div class="input-value">
+                    <label for="#numberOfArraysToGenerate">numberOfArraysToGenerate (number of arrays to generate)</label>
+                    <input id="numberOfArraysToGenerate" type="text" value="10">
+                </div>
+                <div class="input-value">
+                    <label for="#maxIntValue">maxIntValue (value of each array element will be between 1 and this value)</label>
+                    <input id="maxIntValue" type="text" value="1000000">
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="run-experiment">Run the sorting experiment</button>
+                <div class="multiline" id="status-message"></div>
+            </div>
+        </section>
+
+        <script type="module" src="src/main.js"></script>
+    </body>
+</html>
