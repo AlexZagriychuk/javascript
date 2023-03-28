@@ -1,4 +1,4 @@
-import { getCitiesByName } from "./api/weatherAPI.js"
+import { getCitiesByName, getCurrentWeatherByCityCoordinates, getDailyWeatherForecastByCityCoordinates } from "./api/weatherAPI.js"
 import { getCountryCodes } from "./api/countryCodesAPI.js"
 
 
@@ -13,9 +13,31 @@ function debounce(func, timeout = 500) {
     }
 }
 
+function getDayName(dateStr, isAbbreviated = false) {
+    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    const abbreviatedDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+
+    let date = new Date(dateStr)
+    let dayIdx = date.getUTCDay()
+    if(isAbbreviated) {
+        return abbreviatedDays[dayIdx]
+    } else {
+        return daysOfWeek[dayIdx]
+    }
+}
+
 function renderFoundCities(cities) {
     let foundCitiesListElem = document.getElementById("search-results-list")
     foundCitiesListElem.innerHTML = ""
+
+    if(cities.length === 0) {
+        let listElem = document.createElement("li")
+        listElem.setAttribute("data-no-results-found", true)
+        listElem.textContent = "No results found... Please try another city name"
+        listElem.style.color = "red"
+        foundCitiesListElem.appendChild(listElem)
+        return
+    }
 
     cities.forEach((city, idx) => {
         let listElem = document.createElement("li")
@@ -35,9 +57,54 @@ function renderFoundCities(cities) {
     sessionStorage.setItem("citiesSearchResults", JSON.stringify(cities));
 }
 
-function fetchAndRenderWeatherDataByCity({name, state, country, lat, lon}) {
-    //ToDo: implement weather data fetching for this city coordinates
-    console.log(`cityData: name = ${name}; state = ${state}; country = ${country}; lat = ${lat}; lon = ${lon}`)
+function renderCurrentWeather({city, state, country, temp, feelsLikeTemp, weatherStatus, weatherIcon}) {
+    //ToDo remove TMP
+    window.renderCurrentWeatherData = arguments[0]
+    console.log("renderCurrentWeatherData", arguments[0])
+
+    // ToDo: implement rendering
+
+}
+
+function renderDailyWeatherForecasts(dailyForecasts) {
+    //ToDo remove TMP
+    window.renderDailyWeatherForecastData = arguments[0]
+    console.log("renderDailyWeatherForecastData", arguments[0])
+   
+    // ToDo: implement rendering
+    dailyForecasts.forEach((dailyForecast) => {
+        let {day, weatherIcon, weatherDescription, minTemp, maxTemp} = dailyForecast
+        console.log(day, weatherIcon, weatherDescription, minTemp, maxTemp)
+    })
+}
+
+async function fetchAndRenderWeatherForecastByCity({name, state, country, lat, lon}) {
+    Promise.all([
+        getCurrentWeatherByCityCoordinates(lat, lon),
+        getDailyWeatherForecastByCityCoordinates(lat, lon)
+    ]).then(data => {
+        let currentWeather = data[0]
+        let dailyWeatherForecast = data[1]
+
+        let currentWeatherParsedData = {city: name, state, country, weatherStatus: currentWeather.weather[0].main, weatherIcon: currentWeather.weather[0].icon,
+                                        temp: Math.round(currentWeather.main.temp), feelsLikeTemp: Math.round(currentWeather.main.feels_like)} 
+
+        // We only need first 5 days from the results (sometimes results have 6 elements, for example: 1/2 of today + 4 full days + 1/2 of the 6th day)
+        let dailyWeatherForecastParsedData = []
+        for(let i = 0; i < 5; i++) {
+            let weatherForecast = dailyWeatherForecast.list[i]
+            let dayName = getDayName(weatherForecast.date_txt, true).toUpperCase()
+            let parsedDataObj = {day: dayName, weatherIcon: weatherForecast.weather[0].icon, weatherDescription: weatherForecast.weather[0].description, 
+                                minTemp: Math.round(weatherForecast.temp.min), maxTemp: Math.round(weatherForecast.temp.max)}
+            dailyWeatherForecastParsedData.push(parsedDataObj)
+        }
+
+        renderCurrentWeather(currentWeatherParsedData)
+        renderDailyWeatherForecasts(dailyWeatherForecastParsedData)
+
+    }).catch(error => {
+        console.error(error);
+    })
 }
 
 const processCountrySearchInput = debounce(async (event) => {
@@ -51,9 +118,14 @@ const processCountrySearchInput = debounce(async (event) => {
 })
 
 function processSearchResultClick(event) {
+    let noResultsFound = event.target.getAttribute("data-no-results-found")
+    if(noResultsFound) {
+        return
+    }
+    
     // Set the value of the clicked search result city into the input city search field and into the currently chosen city field  
     let currentCity = event.target.innerText
-    document.getElementById("current-city-txt").textContent = currentCity
+    document.getElementById("selected-city-txt").textContent = currentCity
     citySearchInputElem.value = currentCity
 
     // Empty the search results list after one of the elements was selected (clicked)
@@ -64,7 +136,7 @@ function processSearchResultClick(event) {
     let citiesSearchResults = JSON.parse(sessionStorage.getItem("citiesSearchResults"))
     let foundCityData = citiesSearchResults[dataSearchResultIndex]
 
-    fetchAndRenderWeatherDataByCity(foundCityData)
+    fetchAndRenderWeatherForecastByCity(foundCityData)
 }
 
 
