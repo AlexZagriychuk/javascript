@@ -25,3 +25,15 @@ document.getElementById("validate-date").addEventListener("click", event => {
         statusMessageElem.style.color = "red"
     }
 })
+
+document.getElementById("validate-required-data").addEventListener("click", event => {
+    let requiredDataValue = document.getElementById("required-data").value
+    
+    if(new Validator().isRequired(requiredDataValue)) {
+        statusMessageElem.textContent = `Required data '${requiredDataValue}' is valid`
+        statusMessageElem.style.color = "green"
+    } else {
+        statusMessageElem.textContent = `Required data '${requiredDataValue}' is not valid`
+        statusMessageElem.style.color = "red"
+    }
+})

@@ -1,5 +1,6 @@
 import EmailValidator from "./EmailValidator.js"
 import DateValidator from "./DateValidator.js"
+import RequiredDataValidator from "./RequiredDataValidator.js"
 
 export class Validator {
     isEmail(email) {
@@ -8,5 +9,9 @@ export class Validator {
 
     isDate(date) {
         return DateValidator.isValid(date)
+    }
+
+    isRequired(data) {
+        return RequiredDataValidator.isValid(data)
     }
 }
