@@ -5,7 +5,7 @@ const statusMessageElem = document.getElementById("status-message")
 document.getElementById("validate-email").addEventListener("click", event => {
     let emailValue = document.getElementById("email").value
     
-    if(new Validator().isEmail(emailValue)) {
+    if(Validator.isEmail(emailValue)) {
         statusMessageElem.textContent = `Email '${emailValue}' is valid`
         statusMessageElem.style.color = "green"
     } else {
@@ -17,7 +17,7 @@ document.getElementById("validate-email").addEventListener("click", event => {
 document.getElementById("validate-date").addEventListener("click", event => {
     let dateValue = document.getElementById("date").value
     
-    if(new Validator().isDate(dateValue)) {
+    if(Validator.isDate(dateValue)) {
         statusMessageElem.textContent = `Date '${dateValue}' is valid`
         statusMessageElem.style.color = "green"
     } else {
@@ -29,7 +29,7 @@ document.getElementById("validate-date").addEventListener("click", event => {
 document.getElementById("validate-required-data").addEventListener("click", event => {
     let requiredDataValue = document.getElementById("required-data").value
     
-    if(new Validator().isRequired(requiredDataValue)) {
+    if(Validator.isRequired(requiredDataValue)) {
         statusMessageElem.textContent = `Required data '${requiredDataValue}' is valid`
         statusMessageElem.style.color = "green"
     } else {

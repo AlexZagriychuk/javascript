@@ -3,15 +3,15 @@ import DateValidator from "./DateValidator.js"
 import RequiredDataValidator from "./RequiredDataValidator.js"
 
 export class Validator {
-    isEmail(email) {
+    static isEmail(email) {
         return EmailValidator.isValid(email)
     }
 
-    isDate(date) {
+    static isDate(date) {
         return DateValidator.isValid(date)
     }
 
-    isRequired(data) {
+    static isRequired(data) {
         return RequiredDataValidator.isValid(data)
     }
 }
