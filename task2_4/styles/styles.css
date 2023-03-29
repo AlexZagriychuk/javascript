@@ -1,0 +1,11 @@
+body {
+	font-family: cursive;
+}
+
+#main {
+	max-width: 1000px;
+	width: fit-content;
+
+	margin: auto;
+	padding: 10px;
+}
