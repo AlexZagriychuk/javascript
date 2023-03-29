@@ -26,6 +26,21 @@ function getDayName(dateStr, isAbbreviated = false) {
     }
 }
 
+function createAndAppendElement(appendToNode, elementTag, className = "", textContent = "", attributes = []) {
+    let newElem = document.createElement(elementTag)
+    
+    if(className !== "") {
+        newElem.className = className
+    }
+    if(textContent !== "") {
+        newElem.textContent = textContent
+    }
+    attributes.forEach(attribute => newElem.setAttribute(attribute.name, attribute.value))
+
+    appendToNode.appendChild(newElem)
+    return newElem
+}
+
 function renderFoundCities(cities) {
     let foundCitiesListElem = document.getElementById("search-results-list")
     foundCitiesListElem.innerHTML = ""
@@ -58,23 +73,57 @@ function renderFoundCities(cities) {
 }
 
 function renderCurrentWeather({city, state, country, temp, feelsLikeTemp, weatherStatus, weatherIcon}) {
-    //ToDo remove TMP
-    window.renderCurrentWeatherData = arguments[0]
-    console.log("renderCurrentWeatherData", arguments[0])
+    let parentNode = document.querySelector(".weather-box")
 
-    // ToDo: implement rendering
+    // Removing the inner HTML content from the .weather-now element (or creating it if not present) 
+    let weatherNowElem = document.querySelector(".weather-box > .weather-now")
+    if(weatherNowElem) {
+        weatherNowElem.innerHTML = ""
+    } else {
+        weatherNowElem = createAndAppendElement(parentNode, "div", "weather-now")
+    }
 
+    // Rendering data inside the .weather-now element
+    let weatherNowTemperaturesElem = createAndAppendElement(weatherNowElem, "div", "weather-now-temperatures")
+    createAndAppendElement(weatherNowTemperaturesElem, "div", "temperature-now", temp)
+    createAndAppendElement(weatherNowTemperaturesElem, "div", "", "Feels like " + feelsLikeTemp)
+
+    let weatherNowDescriptionAndCityElem = createAndAppendElement(weatherNowElem, "div", "weather-now-description-and-city") 
+    createAndAppendElement(weatherNowDescriptionAndCityElem, "div", "weather-now-description", weatherStatus)
+    createAndAppendElement(weatherNowDescriptionAndCityElem, "div", "weather-now-city", `${city}, ${country}`)
+
+    let weatherNowIconElem = createAndAppendElement(weatherNowElem, "div", "weather-now-icon")
+    let weatherIconPath = `https://openweathermap.org/img/wn/${weatherIcon}@2x.png`
+    createAndAppendElement(weatherNowIconElem, "img", "", "", [{name: "src", value: weatherIconPath}, {name: "alt", value: weatherStatus}])
 }
 
 function renderDailyWeatherForecasts(dailyForecasts) {
-    //ToDo remove TMP
-    window.renderDailyWeatherForecastData = arguments[0]
-    console.log("renderDailyWeatherForecastData", arguments[0])
-   
-    // ToDo: implement rendering
+    let parentNode = document.querySelector(".weather-box")
+
+    // Removing the inner HTML content from the .weather-forecasts element (or creating it if not present) 
+    let weatherForecastsElem = document.querySelector(".weather-box > .weather-forecasts")
+    if(weatherForecastsElem) {
+        weatherForecastsElem.innerHTML = ""
+    } else {
+        weatherForecastsElem = createAndAppendElement(parentNode, "div", "weather-forecasts")
+    }
+
+    // Rendering all .weather-forecast elements
     dailyForecasts.forEach((dailyForecast) => {
         let {day, weatherIcon, weatherDescription, minTemp, maxTemp} = dailyForecast
-        console.log(day, weatherIcon, weatherDescription, minTemp, maxTemp)
+
+        let weatherForecastElem = createAndAppendElement(weatherForecastsElem, "div", "weather-forecast")
+        
+        createAndAppendElement(weatherForecastElem, "div", "weather-forecast-day", day)
+        let weatherForecastIconElem = createAndAppendElement(weatherForecastElem, "div", "weather-forecast-icon")
+        createAndAppendElement(weatherForecastElem, "div", "weather-forecast-description", weatherDescription)
+        let weatherForecastTemperaturesElem = createAndAppendElement(weatherForecastElem, "div", "weather-forecast-temperatures")
+
+        let weatherIconPath = `https://openweathermap.org/img/wn/${weatherIcon}@2x.png`
+        createAndAppendElement(weatherForecastIconElem, "img", "", "", [{name: "src", value: weatherIconPath}, {name: "alt", value: weatherDescription}])
+
+        createAndAppendElement(weatherForecastTemperaturesElem, "div", "", minTemp)
+        createAndAppendElement(weatherForecastTemperaturesElem, "div", "", maxTemp)
     })
 }
 
@@ -87,7 +136,7 @@ async function fetchAndRenderWeatherForecastByCity({name, state, country, lat, l
         let dailyWeatherForecast = data[1]
 
         let currentWeatherParsedData = {city: name, state, country, weatherStatus: currentWeather.weather[0].main, weatherIcon: currentWeather.weather[0].icon,
-                                        temp: Math.round(currentWeather.main.temp), feelsLikeTemp: Math.round(currentWeather.main.feels_like)} 
+                                        temp: Math.round(currentWeather.main.temp)+"℃", feelsLikeTemp: Math.round(currentWeather.main.feels_like)+"℃"} 
 
         // We only need first 5 days from the results (sometimes results have 6 elements, for example: 1/2 of today + 4 full days + 1/2 of the 6th day)
         let dailyWeatherForecastParsedData = []
@@ -95,7 +144,7 @@ async function fetchAndRenderWeatherForecastByCity({name, state, country, lat, l
             let weatherForecast = dailyWeatherForecast.list[i]
             let dayName = getDayName(weatherForecast.date_txt, true).toUpperCase()
             let parsedDataObj = {day: dayName, weatherIcon: weatherForecast.weather[0].icon, weatherDescription: weatherForecast.weather[0].description, 
-                                minTemp: Math.round(weatherForecast.temp.min), maxTemp: Math.round(weatherForecast.temp.max)}
+                                minTemp: Math.round(weatherForecast.temp.min)+"℃", maxTemp: Math.round(weatherForecast.temp.max)+"℃"}
             dailyWeatherForecastParsedData.push(parsedDataObj)
         }
 
@@ -109,10 +158,6 @@ async function fetchAndRenderWeatherForecastByCity({name, state, country, lat, l
 
 const processCountrySearchInput = debounce(async (event) => {
     let citySearchInput = event.target.value.trim()
-    
-    //ToDo: remove TMP
-    console.log(`Search input value = '${citySearchInput}'`)
-    
     let foundCities = await getCitiesByName(citySearchInput)
     renderFoundCities(foundCities)
 })

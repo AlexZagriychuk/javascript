@@ -1,32 +1,156 @@
 body {
-    /* font-family: cursive;     */
+    background-color: #4299E1;
+    font-size: 18px;
+
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 #main {
     margin: auto;
-    max-width: 500px;
+    max-width: 400px;
 }
 
 .search-box {
-    position: relative;
+    margin: 70px auto 5px;
 
+    position: relative;
 }
 
 .search-box input {
+    padding: 10px;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    outline-color: #4299E1;
+
     width: 100%;
 
+    font-size: inherit;
+    color: #2D3748;
 }
 
 .search-results {
     width: 100%;
 
+    background-color: white;
+
     position: absolute;
     z-index: 1000;
-    background-color: white;
 }
 
 .search-results ul {
     margin: 0;
     padding: 0;
+    outline: 1px solid black;
+    outline-offset: -1px;
+
     list-style-type: none;
+}
+
+.search-results ul li {
+    padding: 5px 10px;
+}
+
+.search-results ul li:hover {
+    cursor: pointer;
+    outline: 2px solid darkblue;
+    outline-offset: -3px;
+
+    font-weight: bold;
+}
+
+.selected-city {
+    color: #2D3748;
+}
+
+#selected-city-txt {
+    font-weight: bold;
+}
+
+
+.weather-box {
+    margin-top: 40px;
+    border-radius: 10px;
+
+    color:white;
+
+    overflow: hidden;
+}
+
+.weather-now {
+    padding: 25px;
+
+    background-color: #1A202C;
+    white-space: nowrap;
+
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+.weather-now-temperatures, .weather-now-description-and-city, .weather-now-icon {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.temperature-now {
+    font-size: 45px;
+    font-weight: bold;
+}
+
+.weather-now-temperatures {
+    text-align: center;
+}
+
+.weather-now-description-and-city {
+    margin-left: 15px;
+}
+
+.weather-now-description {
+    font-weight: bold;
+}
+
+.weather-now-city {
+    white-space: normal;
+}
+
+.weather-forecasts {
+    background-color: #2D3748;
+
+    padding: 50px 25px 25px;
+}
+
+.weather-forecast {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 16px;
+}
+
+.weather-forecast-day {
+    width: 30px;
+    font-size: 18px;
+}
+
+.weather-forecast-icon {
+    margin-left: 30px;
+}
+
+.weather-forecast-icon img {
+    width: 80%;
+}
+
+.weather-forecast-description {
+    flex: 1;
+}
+
+.weather-forecast-temperatures {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
 }
