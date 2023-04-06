@@ -1,4 +1,7 @@
 let itemsListData = []
+const cookieName = "ToDo_list_data"
+const cookieExpirationTime = 10*24*60*60*1000 // 10 days
+
 const addItemButton = document.getElementById("add-item-btn")
 const editItemButton = document.getElementById("edit-item-btn")
 const inputItemTextElem = document.getElementById("add-edit-item-input")
@@ -54,7 +57,7 @@ function handleAddItem(event) {
     if(newItemText !== "") {
         itemsListData.push(newItemText)
         renderNewListItem(newItemText)
-        // ToDo: add new item to the cookie data (and refresh cookie expiration date)
+        updateToDoListCookie()
     }
 
     inputItemTextElem.value = ""
@@ -80,14 +83,13 @@ function handleRemoveListItem(event) {
     // Remove element from DOM, from the array itemsListData with cached data, and from the cookie 
     listItemElemToRemove.remove()
 
-    if(listItemElemToRemove < 0) {
+    if(listItemToRemoveIndex < 0) {
         console.error("[handleRemoveListItem] cannot calculate index of the list item that need to be removed in its parent list element")
     } else {
-        itemsListData.splice(listItemElemToRemove, 1)
+        itemsListData.splice(listItemToRemoveIndex, 1)
     }
 
-    // ToDo: remove deleted item from the cookie data (and refresh cookie expiration date)
-
+    updateToDoListCookie()
 
     //ToDo: remove TMP
     console.log(itemsListData)
@@ -96,34 +98,51 @@ function handleRemoveListItem(event) {
 function handleEditListItem(event) {
     // ToDo: implement Edit Button click handling
 
-    // ToDo: update edited item in the itemsListData and in the cookie data (and refresh cookie expiration date)
+    // ToDo: update edited item in the itemsListData
+    updateToDoListCookie()
 }
 
 
 function handleClearAllItems(event) {
     itemsListElem.innerHTML = ""
     itemsListData = []
+    updateToDoListCookie(cookieName)
+}
 
-    // ToDo: remove all data from the cookie (and refresh cookie expiration date)
+function getDataFromCookie(cookieName) {
+    let cookie = {}
+    document.cookie.split(';').forEach(function(el) {
+      let [k,v] = el.split('=')
+      cookie[k.trim()] = v
+    })
+    return cookie[cookieName]
+}
 
-    //ToDo: remove TMP
-    console.log(itemsListData)
+function updateToDoListCookie() {
+    let now = new Date()
+    console.log("now.toUTCString() before=",now.toUTCString())
+    var expireTime = now.getTime() + cookieExpirationTime
+    now.setTime(expireTime)
+    document.cookie = `${cookieName}=${JSON.stringify(itemsListData)};expires=${now.toUTCString()};path=/`
 }
 
 
 
-
-// ToDo: export data from the cookie if it is present 
-
+// Exporting data into the itemsListData arr from the cookie if it is present
+let dataFromCookie = getDataFromCookie(cookieName)
+if(dataFromCookie) {
+    itemsListData = JSON.parse(dataFromCookie)
+    itemsListData.forEach(listItemText => renderNewListItem(listItemText))
+}
 
 inputItemTextElem.addEventListener("input", event => {
     let inputText = event.target.value.trim()
-    console.log(`inputText = '${inputText}'`)
+    let statusMessageIsHidden = statusMessageElem.style.visibility === "hidden"
 
-    if(inputText === "" && statusMessageElem.style.visibility === "hidden") {
+    if(inputText === "" && statusMessageIsHidden) {
         statusMessageElem.style.visibility = ""
         statusMessageElem.textContent = "Input value must not be empty"
-    } else if(inputText !== "" && statusMessageElem.style.visibility !== "hidden") {
+    } else if(inputText !== "" && !statusMessageIsHidden) {
         statusMessageElem.style.visibility = "hidden"
     }
 })
