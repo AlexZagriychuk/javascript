@@ -9,6 +9,8 @@ const statusMessageElem = document.getElementById("status-message")
 const itemsListElem = document.querySelector(".items-list")
 const clearItemsButton = document.getElementById("clear-items-btn")
 
+let listElementBeingEdited = null
+
 
 function createAndAppendElement(appendToNode, elementTag, className = "", textContent = "", attributes = []) {
     let newElem = document.createElement(elementTag)
@@ -38,16 +40,12 @@ function getParentElementByClassName(currElem, parentClassName) {
 
 function renderNewListItem(itemText) {
     let listItemElem = createAndAppendElement(itemsListElem, "li", "list-item")
-    createAndAppendElement(listItemElem, "div", "", itemText)
+    createAndAppendElement(listItemElem, "div", "list-item-text", itemText)
     let listItemButtonsElem = createAndAppendElement(listItemElem, "div", "list-item-btns")
     let editListItemButton = createAndAppendElement(listItemButtonsElem, "i", "fa-solid fa-pen-to-square")
     let removeListItemButton = createAndAppendElement(listItemButtonsElem, "i", "fa-solid fa-trash")
 
-    editListItemButton.addEventListener("click", event => {
-        window.clickedTarget = event.target
-        console.log("window.clickedTarget = " + clickedTarget)
-    })
-
+    editListItemButton.addEventListener("click", handleStartListItemEditing)
     removeListItemButton.addEventListener("click", handleRemoveListItem)
 }
 
@@ -61,24 +59,25 @@ function handleAddItem(event) {
     }
 
     inputItemTextElem.value = ""
+}
 
-    //ToDo: remove TMP
-    console.log(itemsListData)
+function getListItemIndexInTheList(listItemElem) {
+    let listElem = getParentElementByClassName(listItemElem, "items-list")
+
+    // Getting index of the list item which need to be removed (to remove it from cached data and the cookie) 
+    let itemsElemChildren = Array.from(listElem.querySelectorAll(".list-item"))
+    for(let i = 0; i < itemsElemChildren.length; i++) {
+        if(itemsElemChildren[i] === listItemElem) {
+            return i
+        }
+    }
+
+    return -1
 }
 
 function handleRemoveListItem(event) {
     let listItemElemToRemove = getParentElementByClassName(event.target, "list-item")
-    let itemsElem = getParentElementByClassName(listItemElemToRemove, "items-list")
-
-    // Getting index of the list item which need to be removed (to remove it from cached data and the cookie) 
-    let itemsElemChildren = Array.from(itemsElem.querySelectorAll(".list-item"))
-    let listItemToRemoveIndex = -1
-    for(let i = 0; i < itemsElemChildren.length; i++) {
-        if(itemsElemChildren[i] === listItemElemToRemove) {
-            listItemToRemoveIndex = i
-            break
-        }
-    }
+    let listItemToRemoveIndex = getListItemIndexInTheList(listItemElemToRemove)
 
     // Remove element from DOM, from the array itemsListData with cached data, and from the cookie 
     listItemElemToRemove.remove()
@@ -90,18 +89,62 @@ function handleRemoveListItem(event) {
     }
 
     updateToDoListCookie()
-
-    //ToDo: remove TMP
-    console.log(itemsListData)
 }
 
-function handleEditListItem(event) {
-    // ToDo: implement Edit Button click handling
+function handleStartListItemEditing(event) {
+    let listItemElemToEdit = getParentElementByClassName(event.target, "list-item")
+    // If we click edit on the same element we are currently editing then we cancel the editing process
+    if(listItemElemToEdit === listElementBeingEdited) {
+        deactivateListItemEditingMode()
+        return
+    }
 
-    // ToDo: update edited item in the itemsListData
+    let listElem = getParentElementByClassName(listItemElemToEdit, "items-list")
+    
+    // Remove the "editing" class from all list items (if another editing is in progress) and add this class to the current list item only
+    Array.from(listElem.querySelectorAll(".list-item")).forEach(listItemElem => {
+        listItemElem.classList.remove("editing")
+    })
+    listItemElemToEdit.classList.add("editing")
+
+    // Save the element being currently edited into the variable 
+    listElementBeingEdited = listItemElemToEdit
+
+    // Activate the edit button and deactivate the add button
+    editItemButton.style.display = "block"
+    addItemButton.style.display = "none"
+
+    // Set current list element value into the input value (to be able to edit it)
+    let listItemText = listItemElemToEdit.querySelector(".list-item-text").textContent
+    inputItemTextElem.value = listItemText
+    inputItemTextElem.focus()
+}
+
+function handleFinishListItemEditing() {
+    let listItemToEditIndex = getListItemIndexInTheList(listElementBeingEdited)
+    let newListItemValue = inputItemTextElem.value.trim()
+    listElementBeingEdited.querySelector(".list-item-text").textContent = newListItemValue
+
+    if(listItemToEditIndex < 0) {
+        console.error("[handleFinishListItemEditing] cannot calculate index of the list item that need to be edited in its parent list element")
+    } else {
+        itemsListData[listItemToEditIndex] = newListItemValue
+    }
+
+    deactivateListItemEditingMode()
     updateToDoListCookie()
 }
 
+function deactivateListItemEditingMode() {
+    if(listElementBeingEdited) {
+        listElementBeingEdited.classList.remove("editing")
+        listElementBeingEdited = null
+    }
+
+    addItemButton.style.display = "block"
+    editItemButton.style.display = "none"
+    inputItemTextElem.value = ""
+}
 
 function handleClearAllItems(event) {
     itemsListElem.innerHTML = ""
@@ -120,7 +163,6 @@ function getDataFromCookie(cookieName) {
 
 function updateToDoListCookie() {
     let now = new Date()
-    console.log("now.toUTCString() before=",now.toUTCString())
     var expireTime = now.getTime() + cookieExpirationTime
     now.setTime(expireTime)
     document.cookie = `${cookieName}=${JSON.stringify(itemsListData)};expires=${now.toUTCString()};path=/`
@@ -147,4 +189,13 @@ inputItemTextElem.addEventListener("input", event => {
     }
 })
 addItemButton.addEventListener("click", handleAddItem)
+editItemButton.addEventListener("click", handleFinishListItemEditing)
 clearItemsButton.addEventListener("click", handleClearAllItems)
+
+document.addEventListener("keydown", event => {
+    // If list item editing is in process and escape key is pressed, cancel the editing process
+    let isEscape = (event.key === "Escape" || event.key === "Esc")
+    if(isEscape && listElementBeingEdited) {
+        deactivateListItemEditingMode()
+    }
+})
