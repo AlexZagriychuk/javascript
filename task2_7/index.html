@@ -21,11 +21,13 @@
             <div class="container">
                 <div class="search-controls">
                     <div class="country-search">
-                        <input type="text" id="country-search-input" placeholder="Search for a country...">
+                        <input type="search" id="country-search-input" placeholder="Search for a country...">
                     </div>
                     <div class="region-filter">
                         <select name="region-filter-select" id="region-filter-select">
                             <option value="" disabled selected hidden>Filter by Region</option>
+                            <!-- Empty text option (when we need to disable region filter from the select element)-->
+                            <option value="-1"></option>
                             <!-- Other options will be added dynamically -->
                         </select>
                     </div>
