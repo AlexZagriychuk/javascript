@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Todo list</title>
+
+        <script src="https://kit.fontawesome.com/1d2dc94d3e.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="styles/styles.css">
+    </head>
+
+    <body>
+        <section id="main">
+            <h2>Grocery Bud</h2>
+
+            <div class="add-edit-item-controls">
+                <input id="add-edit-item-input" type="text" placeholder="e.g. eggs">
+                <button id="add-item-btn">Add</button>
+                <button id="edit-item-btn">Edit</button>
+            </div>
+
+            <div id="status-message" style="visibility:hidden">Dynamic Status Message Text</div>
+
+            <ul class="items-list">
+                <!-- Will be updated dynamically -->
+            </ul>
+
+            <div class="clear-items-controls">
+                <button id="clear-items-btn">Clear Items</button>
+            </div>
+        </section>
+    </body>
+
+    <script type="module" src="src/main.js"></script>
+</html>
