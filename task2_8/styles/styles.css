@@ -1,0 +1,168 @@
+.container {
+    margin: 0 auto;
+    padding: 0 10px;
+    max-width: 1200px;
+}
+
+
+/* --------------------------------- */
+/* -----   Common - Header     ----- */
+/* --------------------------------- */
+.home-header {
+    background-image: url("../resources/2.8 header photo tmp.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+.header-top-row {
+    padding: 20px 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    position: relative;
+}
+
+.header > .container {
+    color: #112942;
+}
+
+.header-nav a {
+    color: inherit;
+    font-size: 20px;
+    letter-spacing: 0.1rem;
+}
+
+.header-nav a:nth-of-type(n+2) {
+    margin-left: 30px;
+}
+
+.header-logo {
+    height: 100%;
+    
+    font-family: cursive;
+    font-size: 40px;
+    font-style: italic;
+    text-align: center;
+    text-shadow: 1px 2px lightgray;
+
+    /* Centering the logo in the .header-top-row */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.home-header .header-logo {
+    text-shadow: 1px 2px black;
+}
+
+.header-cart {
+    margin-right: 15px; /* making sure the cart and circle with items in the cart will be visible with lower viewport width */
+    position: relative;
+}
+
+#cart-items-count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(60%, -60%);
+
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+
+    padding: 4px;
+    min-width: 24px; /* font-size + padding-left + padding-right */
+    background-color: #BA5D2C;
+    border-radius: 50%;
+}
+
+.fa-cart-shopping {
+    color: inherit;
+    font-size: 20px;
+}
+
+.header-greetings {
+    padding: 300px 0;
+}
+
+.greetings-one {
+    font-family: cursive;
+    font-size: 80px;
+}
+
+.greetings-two {
+    margin-top: 20px;
+    font-size: 50px;
+}
+
+.shop-now-btn {
+    margin-top: 30px;
+    padding: 10px;
+    border: 2px solid white;
+    border-radius: 5px;
+
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    color: inherit;
+    background-color: transparent;
+}
+
+
+/* --------------------------------- */
+/* -----     Common - other    ----- */
+/* --------------------------------- */
+.page-title {
+    padding: 60px 0;
+    background-color: #F1F5F8;
+}
+
+.page-title-text {
+    font-size: 30px;
+    color: #617D98;
+}
+
+
+/* --------------------------------- */
+/* ---   Common - title text   --- */
+/* --------------------------------- */
+.section-title-text {
+    font-size: 45px;
+    text-align: center;
+    color: #112942;
+}
+
+.section-title-text::before {
+    margin-right: 10px;
+    
+    content: "/";
+    color: #BA5D2C;
+    font-weight: bold;
+}
+
+
+
+/* --------------------------------- */
+/* ----        About page       ---- */
+/* --------------------------------- */
+.about-content {
+    margin-top: 70px;
+}
+
+.about-content-container {
+    margin: 0 auto;
+    padding: 0 10px;
+    max-width: 65%;
+}
+
+.our-history-text {
+    margin-top: 30px;
+    font-size: 20px;
+    color: #617D98;
+    line-height: 1.4;
+}
