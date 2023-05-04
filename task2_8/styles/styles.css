@@ -40,12 +40,12 @@
 }
 
 .header-logo {
+    margin-top: 5px;
     height: 100%;
     
     font-family: cursive;
     font-size: 40px;
     font-style: italic;
-    text-align: center;
     text-shadow: 1px 2px lightgray;
 
     /* Centering the logo in the .header-top-row */
@@ -101,6 +101,7 @@
 }
 
 .shop-now-btn {
+    display: inline-block;
     margin-top: 30px;
     padding: 10px;
     border: 2px solid white;
@@ -129,7 +130,7 @@
 
 
 /* --------------------------------- */
-/* ---   Common - title text   --- */
+/* ---    Common - title text    --- */
 /* --------------------------------- */
 .section-title-text {
     font-size: 45px;
@@ -148,10 +149,116 @@
 
 
 /* --------------------------------- */
+/* -- Common - item cart controls -- */
+/* --------------------------------- */
+.item-cart-controls {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 100%);
+    transition: 0.5s;
+
+    font-size: 26px;
+    font-weight: bold;
+    color: #BA5D2C;
+    background-color: white;
+
+    padding: 5px;
+    border: 1px solid lightgray;
+    border-radius: 26px; /* the same as font-size */
+}
+
+.item-cart-control-minus, .item-cart-control-plus {
+    /* inherit from .item-cart-controls */
+    font-size: inherit; 
+    font-weight: inherit;
+    background-color: inherit;
+    color: inherit;
+    
+    outline: 2px solid #BA5D2C;
+    border-radius: 50%;
+
+    padding: 2px;
+    /* font-size + padding-left + padding-right + 4 */
+    width: 34px; 
+    height: 34px;
+}
+
+.item-cart-control-count {
+    margin-left: 2px;
+}
+
+
+/* --------------------------------- */
+/* ----        Home page        ---- */
+/* --------------------------------- */
+.home-featured {
+    padding: 70px 0 50px;
+}
+
+.featured-items {
+    margin-top: 40px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.featured-item {
+    font-size: 20px;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+.featured-item-img {
+    width: 100%;
+    border-radius: 10px;
+
+    /* for the .item-cart-controls */
+    position: relative; 
+    overflow: hidden;
+}
+
+.featured-item-img img {
+    width: 100%;
+}
+
+.featured-item:hover .item-cart-controls {
+    transform: translate(-50%, -10px);
+}
+
+
+.featured-item-name {
+    margin-top: 20px;
+    color: #617D98;
+}
+
+.featured-item-price {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #324D67;
+}
+
+.all-products-btn {
+    display: block;
+    width: fit-content;
+
+    margin: 40px auto 0;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #BA5D2C;
+
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+
+/* --------------------------------- */
 /* ----        About page       ---- */
 /* --------------------------------- */
 .about-content {
-    margin-top: 70px;
+    padding-top: 70px;
 }
 
 .about-content-container {
