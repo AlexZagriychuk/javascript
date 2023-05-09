@@ -31,9 +31,105 @@
             </div>
         </section>
 
-        <section class="main">
+        <section class="products-content">
             <div class="container">
-                <div>ABOUT</div>
+                <aside class="products-filters">
+                    <input type="text" placeholder="Search..." id="products-filter-item-name">
+
+                    <div class="products-filter-company">
+                        <h3 class="products-filter-header">Company</h3>
+                        <ul class="products-filter-company-list">
+                            <li>All</li>
+                            <li>Ikea</li>
+                            <li>Marcos</li>
+                            <li>Caressa</li>
+                            <li>Liddy</li>
+                        </ul>
+                    </div>
+
+                    <div class="products-filter-price">
+                        <h3 class="products-filter-header">Price</h3>
+                        <input type="range" id="price-range" name="price-range" min="0" max="100">
+                        <div>
+                            Value : $<span id="price-filter-value">45</span>
+                        </div>
+                    </div>
+                </aside>
+                
+                <div class="products-cards">
+                    <div class="item">
+                        <div class="item-img">
+                            <img src="../resources/ikea-01-morabo.avif" alt="ikea-morabo-sofa">
+                            <div class="item-cart-controls">
+                                <button class="item-cart-control-minus">-</button>
+                                <span class="item-cart-control-count">1</span>
+                                <button class="item-cart-control-plus">+</button>
+                            </div>
+                        </div>
+                        <div class="item-name">Morabo Sofa</div>
+                        <div class="item-price">$699.00</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-img">
+                            <img src="../resources/ikea-02-malm-bed.avif" alt="ikea-malm-bed" class="item-img">
+                            <div class="item-cart-controls">
+                                <button class="item-cart-control-minus">-</button>
+                                <span class="item-cart-control-count">1000</span>
+                                <button class="item-cart-control-plus">+</button>
+                            </div>
+                        </div>
+                        <div class="item-name">Malm Bed</div>
+                        <div class="item-price">$349.00</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-img">
+                            <img src="../resources/ikea-03-kallax-shelf-unit.avif" alt="ikea-kallax-shelf-unit" class="item-img">
+                            <div class="item-cart-controls">
+                                <button class="item-cart-control-minus">-</button>
+                                <span class="item-cart-control-count">3</span>
+                                <button class="item-cart-control-plus">+</button>
+                            </div>
+                        </div>
+                        <div class="item-name">Kallax Shelf Unit</div>
+                        <div class="item-price">$129.00</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-img">
+                            <img src="../resources/ikea-01-morabo.avif" alt="ikea-morabo-sofa">
+                            <div class="item-cart-controls">
+                                <button class="item-cart-control-minus">-</button>
+                                <span class="item-cart-control-count">1</span>
+                                <button class="item-cart-control-plus">+</button>
+                            </div>
+                        </div>
+                        <div class="item-name">Morabo Sofa</div>
+                        <div class="item-price">$699.00</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-img">
+                            <img src="../resources/ikea-02-malm-bed.avif" alt="ikea-malm-bed" class="item-img">
+                            <div class="item-cart-controls">
+                                <button class="item-cart-control-minus">-</button>
+                                <span class="item-cart-control-count">1000</span>
+                                <button class="item-cart-control-plus">+</button>
+                            </div>
+                        </div>
+                        <div class="item-name">Malm Bed</div>
+                        <div class="item-price">$349.00</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-img">
+                            <img src="../resources/ikea-03-kallax-shelf-unit.avif" alt="ikea-kallax-shelf-unit" class="item-img">
+                            <div class="item-cart-controls">
+                                <button class="item-cart-control-minus">-</button>
+                                <span class="item-cart-control-count">3</span>
+                                <button class="item-cart-control-plus">+</button>
+                            </div>
+                        </div>
+                        <div class="item-name">Kallax Shelf Unit</div>
+                        <div class="item-price">$129.00</div>
+                    </div>
+                </div>
             </div>
         </section>
     </body>
