@@ -3,7 +3,7 @@ const productsData = [
         "id": 1,
         "name": "Morabo Sofa",
         "brand": "Ikea",
-        "price": "699.00",
+        "price": "699.33",
         "imageURL": "resources/ikea-01-morabo.avif",
         "isFeatured": true
     },
