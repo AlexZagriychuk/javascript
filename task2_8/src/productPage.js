@@ -5,15 +5,18 @@ import ProductFilters from "./ProductFilters.js";
 
 const productsListElem = document.querySelector(".products-cards") 
 
-Cart.renderCartTotalCount()
-const cartData = Cart.getCartData()
-
 const products = await getAllProducts()
-products.forEach(product => {
-    product.imageURL = "../" + product.imageURL // Navigate out of the current folder "pages" (for the product.html file) to generate the full path to imageURL
-    product.cartCount = cartData[product.id]
 
-    Product.render(product, productsListElem) 
+// Cart must be initialized only after products data has been fetched
+const cart = new Cart(products)
+const cartData = cart.getCartData()
+
+products.forEach(productData => {
+    productData.imageURL = "../" + productData.imageURL // Navigate out of the current folder "pages" (for the product.html file) to generate the full path to imageURL
+    productData.cartCount = cartData[productData.id]
+
+    let product = new Product(productData, cart)
+    product.render(productsListElem) 
 })
 
 // Product filters must be initialized only after all products have been rendered

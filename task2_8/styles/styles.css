@@ -61,6 +61,7 @@
 
 .header-cart {
     margin-right: 15px; /* making sure the cart and circle with products in the cart will be visible with lower viewport width */
+    cursor: pointer;
     position: relative;
 }
 
