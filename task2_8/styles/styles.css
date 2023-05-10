@@ -344,6 +344,10 @@
     cursor: pointer;
 }
 
+.products-filter-company-list li.active {
+    font-weight: bold;
+}
+
 .products-cards {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
