@@ -195,7 +195,9 @@
     border: 1px solid lightgray;
     border-radius: 24px; /* the same as font-size */
 
-    white-space: nowrap;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
 }
 
 .item:hover .item-cart-controls {
@@ -212,10 +214,24 @@
     outline: 2px solid #BA5D2C;
     border-radius: 50%;
 
-    padding: 2px;
-    /* font-size + padding-left + padding-right + 4 */
     width: 32px; 
     height: 32px;
+
+    position: relative;
+}
+
+.item-cart-control-minus:before, .item-cart-control-plus:before, .item-cart-control-plus:after {
+    position: absolute;
+    content: "";
+    width: 24px;
+    height: 4px;
+    top: 14px; /* (height of the parent  - height) / 2 */
+    left: 4px; /* (width of the parent  - width) / 2 */
+    background-color: #BA5D2C;
+}
+
+.item-cart-control-plus:after {
+    transform: rotate(90deg);
 }
 
 .item-cart-control-minus:focus, .item-cart-control-plus:focus {
@@ -223,7 +239,8 @@
 }
 
 .item-cart-control-count {
-    margin-left: 2px;
+    display: inline-block;
+    margin: 0 10px;
 }
 
 
