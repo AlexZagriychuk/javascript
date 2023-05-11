@@ -4,57 +4,57 @@ export default class Product {
     constructor(productData, cartObj) {
         // Binding class methods to the class instance
         this.render = this.render.bind(this);
-        this.handleAddProduct = this.handleAddProduct.bind(this);
-        this.handleSubtractProduct = this.handleSubtractProduct.bind(this);
+        this.handleIncreaseProductCount = this.handleIncreaseProductCount.bind(this);
+        this.handleDecreaseProductCount = this.handleDecreaseProductCount.bind(this);
+        this.renderProductCount = this.renderProductCount.bind(this);
 
         this.productData = productData
         this.cartObj = cartObj
+
+        this.productCartControlCountElem = null // will be initialized in the render method
     }
 
     render(appendToNode) {
-        let listElem = ElementUtils.createAndAppendElement(appendToNode, "li", "product", "", [{name: "data-product-id", value: this.productData.id}])
-        let productImgDivElem = ElementUtils.createAndAppendElement(listElem, "div", "product-img")
+        let productElem = ElementUtils.createAndAppendElement(appendToNode, "li", "product", "", [{name: "data-product-id", value: this.productData.id}])
+        let productImgDivElem = ElementUtils.createAndAppendElement(productElem, "div", "product-img")
         ElementUtils.createAndAppendElement(productImgDivElem, "img", "", "", [{name: "src", value: this.productData.imageURL}, {name: "alt", value: ""}])
         let productCartControlsElem = ElementUtils.createAndAppendElement(productImgDivElem, "div", "product-cart-controls")
         let productCartControlMinusElem = ElementUtils.createAndAppendElement(productCartControlsElem, "button", "product-cart-control-minus")
-        ElementUtils.createAndAppendElement(productCartControlsElem, "span", "product-cart-control-count", this.productData.cartCount || 0)
+        let productCartControlCountElem = ElementUtils.createAndAppendElement(productCartControlsElem, "span", "product-cart-control-count", this.productData.cartCount || 0)
         let productCartControlPlusElem = ElementUtils.createAndAppendElement(productCartControlsElem, "button", "product-cart-control-plus")
 
-        ElementUtils.createAndAppendElement(listElem, "div", "product-name", this.productData.name)
-        ElementUtils.createAndAppendElement(listElem, "div", "product-price", this.productData.price)
+        ElementUtils.createAndAppendElement(productElem, "div", "product-name", this.productData.name)
+        ElementUtils.createAndAppendElement(productElem, "div", "product-price", this.productData.price)
 
-        productCartControlPlusElem.addEventListener("click", this.handleAddProduct)
-        productCartControlMinusElem.addEventListener("click", this.handleSubtractProduct)
+        productCartControlPlusElem.addEventListener("click", this.handleIncreaseProductCount)
+        productCartControlMinusElem.addEventListener("click", this.handleDecreaseProductCount)
+
+        this.productCartControlCountElem = productCartControlCountElem
     }
 
-    handleAddProduct(event) {
-        let productCartControlsElem = ElementUtils.getParentElementByClassName(event.target, "product-cart-controls")
-        let productCartControlCountElem = productCartControlsElem.querySelector(".product-cart-control-count")
-        let productCartCount = parseInt(productCartControlCountElem.innerText)
+    handleIncreaseProductCount(event) {
+        let productCartCount = parseInt(this.productCartControlCountElem.innerText)
         let newProductCartCount = productCartCount + 1
 
-        let productElem = ElementUtils.getParentElementByClassName(event.target, "product")
-        let productId = parseInt(productElem.getAttribute("data-product-id"))
-
-        productCartControlCountElem.innerText = newProductCartCount
-        this.cartObj.updateCart(productId, newProductCartCount)
+        this.renderProductCount(newProductCartCount)
+        this.cartObj.updateCart(this.productData.id, newProductCartCount)
     }
 
-    handleSubtractProduct(event) {
-        let productCartControlsElem = ElementUtils.getParentElementByClassName(event.target, "product-cart-controls")
-        let productCartControlCountElem = productCartControlsElem.querySelector(".product-cart-control-count")
-        let productCartCount = parseInt(productCartControlCountElem.innerText)
+    handleDecreaseProductCount(event) {
+        let productCartCount = parseInt(this.productCartControlCountElem.innerText)
         let newProductCartCount = productCartCount - 1
 
-        if(productCartCount == 0) {
+        if(newProductCartCount < 0) {
             // Can't subtract below 0  
             return
         }
 
-        let productElem = ElementUtils.getParentElementByClassName(event.target, "product")
-        let productId = parseInt(productElem.getAttribute("data-product-id"))
+        this.renderProductCount(newProductCartCount)
+        this.cartObj.updateCart(this.productData.id, newProductCartCount)
+    }
 
-        productCartControlCountElem.innerText = newProductCartCount
-        this.cartObj.updateCart(productId, newProductCartCount)
+    renderProductCount(productCount) {
+        this.productData.productCount = productCount
+        this.productCartControlCountElem.innerText = productCount
     }
 }

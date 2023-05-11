@@ -11,7 +11,13 @@ export default class Cart {
         this.handleCartSideBarClose = this.handleCartSideBarClose.bind(this)
         this.renderCartSidebarData = this.renderCartSidebarData.bind(this)
         this.findProductDataById = this.findProductDataById.bind(this)
+        this.findProductObjectById = this.findProductObjectById.bind(this)
         this.calculateCartTotalPrice = this.calculateCartTotalPrice.bind(this)
+        this.renderShoppingCartTotalPrice = this.renderShoppingCartTotalPrice.bind(this)
+        this.handleIncreaseProductCount = this.handleIncreaseProductCount.bind(this)
+        this.handleDecreaseProductCount = this.handleDecreaseProductCount.bind(this)
+        this.handleRemoveProduct = this.handleRemoveProduct.bind(this)
+        this.renderProductCartCountChanges = this.renderProductCartCountChanges.bind(this)
 
         this.cartIconElem = document.querySelector(".header-cart")
         this.cartProductsCountElem = document.getElementById("cart-products-count")
@@ -21,6 +27,7 @@ export default class Cart {
         this.shoppingCartTotalElem = this.cartIFrameElem.contentDocument.getElementById("shopping-cart-total")
 
         this.productsData = productsData
+        this.productObjects = []
         this.cartData = this.getCartData()
 
         this.renderCartTotalCount()
@@ -78,17 +85,27 @@ export default class Cart {
             let removeBtn = ElementUtils.createAndAppendElement(productInfoAndRemoveBtnElem, "button", "shopping-cart-product-remove-btn", "remove")
 
             let productCountControlsElem = ElementUtils.createAndAppendElement(productElem, "div", "shopping-cart-product-count-controls")
-            ElementUtils.createAndAppendElement(productCountControlsElem, "button", "shopping-cart-product-count-increase")
+            let productCountIncreaseElem = ElementUtils.createAndAppendElement(productCountControlsElem, "button", "shopping-cart-product-count-increase")
             ElementUtils.createAndAppendElement(productCountControlsElem, "span", "shopping-cart-product-count", cartProductCount)
-            ElementUtils.createAndAppendElement(productCountControlsElem, "button", "shopping-cart-product-count-decrease")
+            let productCountDecreaseElem = ElementUtils.createAndAppendElement(productCountControlsElem, "button", "shopping-cart-product-count-decrease")
+
+            removeBtn.addEventListener("click", this.handleRemoveProduct)
+            productCountIncreaseElem.addEventListener("click", this.handleIncreaseProductCount)
+            productCountDecreaseElem.addEventListener("click", this.handleDecreaseProductCount)
         }
 
-        this.shoppingCartTotalElem.innerText = this.calculateCartTotalPrice().toFixed(2)
+        this.renderShoppingCartTotalPrice()
     }
 
     findProductDataById(cartProductId) {
         cartProductId = parseInt(cartProductId)
         return this.productsData.find(productData => productData.id === cartProductId)
+    }
+
+    findProductObjectById(cartProductId) {
+        cartProductId = parseInt(cartProductId)
+        let product = this.productObjects.find(productObj => productObj.id === cartProductId)
+        return product ? product.productObj : null
     }
 
     calculateCartTotalPrice() {
@@ -101,5 +118,51 @@ export default class Cart {
         }
 
         return cartTotalPrice
+    }
+
+    renderShoppingCartTotalPrice() {
+        this.shoppingCartTotalElem.innerText = this.calculateCartTotalPrice().toFixed(2)
+    }
+
+    handleIncreaseProductCount(event) {
+        let cartProductElem = ElementUtils.getParentElementByClassName(event.target, "shopping-cart-product")
+        let cartProductCount = parseInt(cartProductElem.querySelector(".shopping-cart-product-count").innerText)
+        let newCartProductCount = cartProductCount + 1
+
+        this.renderProductCartCountChanges(cartProductElem, newCartProductCount)
+    }
+
+    handleDecreaseProductCount(event) {
+        let cartProductElem = ElementUtils.getParentElementByClassName(event.target, "shopping-cart-product")
+        let cartProductCount = parseInt(cartProductElem.querySelector(".shopping-cart-product-count").innerText)
+        let newCartProductCount = cartProductCount - 1
+
+        if(newCartProductCount < 0) {
+            // Can't subtract below 0  
+            return
+        }
+
+        this.renderProductCartCountChanges(cartProductElem, newCartProductCount)
+    }
+
+    handleRemoveProduct(event) {
+        let cartProductElem = ElementUtils.getParentElementByClassName(event.target, "shopping-cart-product")
+        this.renderProductCartCountChanges(cartProductElem, 0)
+        cartProductElem.remove()
+    }
+
+    renderProductCartCountChanges(cartProductElem, newProductCount) {
+        let cartProductCountElem = cartProductElem.querySelector(".shopping-cart-product-count")
+        
+        let productId = parseInt(cartProductElem.getAttribute("data-product-id"))
+        this.updateCart(productId, newProductCount)
+        cartProductCountElem.innerText = newProductCount
+        this.renderShoppingCartTotalPrice()
+
+        // Update Product count on the main page (outside of the Cart sidebar). Only if this page has products rendered
+        let productObj = this.findProductObjectById(productId)
+        if(productObj) {
+            productObj.renderProductCount(newProductCount)
+        }
     }
 }

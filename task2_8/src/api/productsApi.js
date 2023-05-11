@@ -4,7 +4,7 @@ const productsData = [
         "name": "Morabo Sofa",
         "brand": "Ikea",
         "price": "699.33",
-        "imageURL": "resources/ikea-01-morabo.avif",
+        "imageURL": "/task2_8/resources/ikea-01-morabo.avif",
         "isFeatured": true
     },
     {
@@ -12,7 +12,7 @@ const productsData = [
         "name": "Malm Bed",
         "brand": "Ikea",
         "price": "349.00",
-        "imageURL": "resources/ikea-02-malm-bed.avif",
+        "imageURL": "/task2_8/resources/ikea-02-malm-bed.avif",
         "isFeatured": true
     },
     {
@@ -20,7 +20,7 @@ const productsData = [
         "name": "Kallax Shelf Unit",
         "brand": "Ikea",
         "price": "129.00",
-        "imageURL": "resources/ikea-03-kallax-shelf-unit.avif",
+        "imageURL": "/task2_8/resources/ikea-03-kallax-shelf-unit.avif",
         "isFeatured": true
     },
     {
@@ -28,7 +28,7 @@ const productsData = [
         "name": "Morabo Sofa 2",
         "brand": "Ikea2",
         "price": "799.00",
-        "imageURL": "resources/ikea-01-morabo.avif",
+        "imageURL": "/task2_8/resources/ikea-01-morabo.avif",
         "isFeatured": false
     },
     {
@@ -36,7 +36,7 @@ const productsData = [
         "name": "Malm Bed 2",
         "brand": "Ikea2",
         "price": "449.00",
-        "imageURL": "resources/ikea-02-malm-bed.avif",
+        "imageURL": "/task2_8/resources/ikea-02-malm-bed.avif",
         "isFeatured": false
     },
     {
@@ -44,7 +44,7 @@ const productsData = [
         "name": "Kallax Shelf Unit 3",
         "brand": "Ikea3",
         "price": "229.00",
-        "imageURL": "resources/ikea-03-kallax-shelf-unit.avif",
+        "imageURL": "/task2_8/resources/ikea-03-kallax-shelf-unit.avif",
         "isFeatured": false
     }
 ]
