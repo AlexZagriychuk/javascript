@@ -4,12 +4,6 @@ import ElementUtils from "./utils/ElementUtils.js";
 
 export default class ProductFilters {
     constructor(productsData) {
-        // Binding class methods to the class instance
-        this.handleProductNameFilterChange = this.handleProductNameFilterChange.bind(this);
-        this.handleCompanyNameFilterChange = this.handleCompanyNameFilterChange.bind(this);
-        this.handlePriceFilterChange = this.handlePriceFilterChange.bind(this)
-        this.handleProductFilterChange = this.showProductsBasedOnFiltersValues.bind(this);
-
         this.productNameFilterValue = ""
         this.companyNameFilterValue = "All"
         let maxProductPriceCeil = Math.max(...productsData.map(product => Math.ceil(parseFloat(product.price))))
@@ -23,27 +17,27 @@ export default class ProductFilters {
         this.priceFilterValueElem = document.getElementById("price-filter-value")
 
         // Product name filters
-        this.productNameFilterElem.addEventListener("input", JsUtils.debounce(this.handleProductNameFilterChange))
+        this.productNameFilterElem.addEventListener("input", JsUtils.debounce(this.handleProductNameFilterChange.bind(this)))
 
         // Companies names filters. Generating the list based on the productsData (+ "All" to show all companies)
         let companyNameFilterElem = ElementUtils.createAndAppendElement(this.productCompaniesListFilterElem, "li", "active", "All")
-        companyNameFilterElem.addEventListener("click", this.handleCompanyNameFilterChange)
+        companyNameFilterElem.addEventListener("click", (event) => this.handleCompanyNameFilterChange(event))
 
         let companyNames = new Set(productsData.map(product => product.brand))
         companyNames.forEach(companyName => {
             let companyNameFilterElem = ElementUtils.createAndAppendElement(this.productCompaniesListFilterElem, "li", "", companyName)
-            companyNameFilterElem.addEventListener("click", this.handleCompanyNameFilterChange)
+            companyNameFilterElem.addEventListener("click", (event) => this.handleCompanyNameFilterChange(event))
         })
 
         // Price filters
         this.priceFilterSliderElem.max = maxProductPriceCeil
         this.priceFilterSliderElem.value = maxProductPriceCeil
         this.priceFilterValueElem.innerText = maxProductPriceCeil
-        this.priceFilterSliderElem.addEventListener("change", this.handlePriceFilterChange)
+        this.priceFilterSliderElem.addEventListener("change", (event) => this.handlePriceFilterChange(event))
     }
 
 
-    handleProductNameFilterChange(event) {        
+    handleProductNameFilterChange(event) {    
         this.productNameFilterValue = event.target.value
         this.showProductsBasedOnFiltersValues()
     }

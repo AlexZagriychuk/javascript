@@ -3,22 +3,6 @@ import ElementUtils from "./utils/ElementUtils.js"
 
 export default class Cart {
     constructor(productsData) {
-        // Binding class methods to the class instance
-        this.updateCart = this.updateCart.bind(this);
-        this.getCartData = this.getCartData.bind(this);
-        this.renderCartTotalCount = this.renderCartTotalCount.bind(this)
-        this.handleCartSideBarActivation = this.handleCartSideBarActivation.bind(this)
-        this.handleCartSideBarClose = this.handleCartSideBarClose.bind(this)
-        this.renderCartSidebarData = this.renderCartSidebarData.bind(this)
-        this.findProductDataById = this.findProductDataById.bind(this)
-        this.findProductObjectById = this.findProductObjectById.bind(this)
-        this.calculateCartTotalPrice = this.calculateCartTotalPrice.bind(this)
-        this.renderShoppingCartTotalPrice = this.renderShoppingCartTotalPrice.bind(this)
-        this.handleIncreaseProductCount = this.handleIncreaseProductCount.bind(this)
-        this.handleDecreaseProductCount = this.handleDecreaseProductCount.bind(this)
-        this.handleRemoveProduct = this.handleRemoveProduct.bind(this)
-        this.renderProductCartCountChanges = this.renderProductCartCountChanges.bind(this)
-
         this.cartIconElem = document.querySelector(".header-cart")
         this.cartProductsCountElem = document.getElementById("cart-products-count")
         this.cartIFrameElem = document.querySelector("iframe.shopping-cart-iframe")
@@ -31,8 +15,8 @@ export default class Cart {
         this.cartData = this.getCartData()
 
         this.renderCartTotalCount()
-        this.cartIconElem.addEventListener("click", this.handleCartSideBarActivation)
-        this.closeShoppingCartBtnElem.addEventListener("click", this.handleCartSideBarClose)
+        this.cartIconElem.addEventListener("click", () => this.handleCartSideBarActivation())
+        this.closeShoppingCartBtnElem.addEventListener("click", () => this.handleCartSideBarClose())
     }
 
     getCartData() {
@@ -60,12 +44,12 @@ export default class Cart {
         this.cartProductsCountElem.innerText = cartTotalCount
     }
 
-    handleCartSideBarActivation(event) {
+    handleCartSideBarActivation() {
         this.cartIFrameElem.classList.add("active")
         this.renderCartSidebarData()
     }
 
-    handleCartSideBarClose(event) {
+    handleCartSideBarClose() {
         this.cartIFrameElem.classList.remove("active")    
     }
 
@@ -89,9 +73,9 @@ export default class Cart {
             ElementUtils.createAndAppendElement(productCountControlsElem, "span", "shopping-cart-product-count", cartProductCount)
             let productCountDecreaseElem = ElementUtils.createAndAppendElement(productCountControlsElem, "button", "shopping-cart-product-count-decrease")
 
-            removeBtn.addEventListener("click", this.handleRemoveProduct)
-            productCountIncreaseElem.addEventListener("click", this.handleIncreaseProductCount)
-            productCountDecreaseElem.addEventListener("click", this.handleDecreaseProductCount)
+            removeBtn.addEventListener("click", (event) => this.handleRemoveProduct(event))
+            productCountIncreaseElem.addEventListener("click", (event) => this.handleIncreaseProductCount(event))
+            productCountDecreaseElem.addEventListener("click", (event) => this.handleDecreaseProductCount(event))
         }
 
         this.renderShoppingCartTotalPrice()

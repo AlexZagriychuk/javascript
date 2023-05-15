@@ -2,12 +2,6 @@ import ElementUtils from "./utils/ElementUtils.js"
 
 export default class Product {
     constructor(productData, cartObj) {
-        // Binding class methods to the class instance
-        this.render = this.render.bind(this);
-        this.handleIncreaseProductCount = this.handleIncreaseProductCount.bind(this);
-        this.handleDecreaseProductCount = this.handleDecreaseProductCount.bind(this);
-        this.renderProductCount = this.renderProductCount.bind(this);
-
         this.productData = productData
         this.cartObj = cartObj
 
@@ -26,13 +20,13 @@ export default class Product {
         ElementUtils.createAndAppendElement(productElem, "div", "product-name", this.productData.name)
         ElementUtils.createAndAppendElement(productElem, "div", "product-price", this.productData.price)
 
-        productCartControlPlusElem.addEventListener("click", this.handleIncreaseProductCount)
-        productCartControlMinusElem.addEventListener("click", this.handleDecreaseProductCount)
+        productCartControlPlusElem.addEventListener("click", () => this.handleIncreaseProductCount())
+        productCartControlMinusElem.addEventListener("click", () => this.handleDecreaseProductCount())
 
         this.productCartControlCountElem = productCartControlCountElem
     }
 
-    handleIncreaseProductCount(event) {
+    handleIncreaseProductCount() {
         let productCartCount = parseInt(this.productCartControlCountElem.innerText)
         let newProductCartCount = productCartCount + 1
 
@@ -40,7 +34,7 @@ export default class Product {
         this.cartObj.updateCart(this.productData.id, newProductCartCount)
     }
 
-    handleDecreaseProductCount(event) {
+    handleDecreaseProductCount() {
         let productCartCount = parseInt(this.productCartControlCountElem.innerText)
         let newProductCartCount = productCartCount - 1
 
