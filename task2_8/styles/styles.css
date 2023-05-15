@@ -283,7 +283,7 @@
 /* ----        About page       ---- */
 /* --------------------------------- */
 .about-content {
-    padding-top: 70px;
+    padding: 70px 0;
 }
 
 .about-content-container {
@@ -319,6 +319,7 @@
 }
 
 #products-filter-product-name {
+    width: 100%;
     padding: 15px;
     border-radius: 10px;
 
@@ -602,13 +603,132 @@
 }
 
 @media screen and (max-width: 2400px) {
-	.home-header {
+    .header-greetings {
+        padding: 250px 0;
+    }
+    
+    .home-header {
         background-position: 50% 90%;
     }
 }
 
 @media screen and (max-width: 1920px) {
-	.home-header {
+    .header-greetings {
+        padding: 200px 0;
+    }
+    
+    .home-header {
         background-position: 50% 100%;
+    }
+
+    .page-title {
+        padding: 50px 0;
+    }
+}
+
+@media screen and (max-width: 1440px) {
+
+}
+
+@media screen and (max-width: 1200px) {
+    .header-greetings {
+        padding: 150px 0;
+    }
+    
+    .page-title {
+        padding: 40px 0;
+    }
+
+    .products-cards {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px 15px;
+    }
+
+    .about-content-container {
+        max-width: 75%;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .page-title {
+        padding: 30px 0;
+    }
+
+    .home-featured {
+        padding: 40px 0;
+    }
+
+    .products-content {
+        padding: 40px 20px;
+    }
+
+    .header-nav a:nth-of-type(n+2) {
+        margin-left: 20px;
+    }
+    
+    .featured-products {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .about-content {
+        padding-top: 30px;
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .header-top-row {
+        padding-bottom: 70px;
+    }
+    
+    .header-logo {
+        margin-top: 50px;
+    }
+
+    .header-greetings {
+        padding: 100px 0;
+    }
+
+    .products-cards {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    
+    .about-content-container {
+        max-width: 85%;
+    }
+}
+
+@media screen and (max-width: 620px) {
+    .featured-products {
+        grid-template-columns: 1fr;
+    }
+
+    .product-img img {
+        height: 300px;
+    }
+
+    .product-cart-controls {
+        transform: translateX(-50%);
+    }
+
+    .product:hover .product-cart-controls {
+        transform: translateX(-50%);
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .shopping-cart {
+        width: 100%;
+        min-width: 400px;
+    }
+
+    .products-filters {
+        margin: 0 auto;
+        width: 50%;
+    }
+
+    .products-content .container {
+        grid-template-columns: 1fr;
     }
 }
