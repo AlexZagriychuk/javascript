@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://kit.fontawesome.com/1d2dc94d3e.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="styles/normalize.css">
+        <link rel="stylesheet" href="styles/styles.css">
+        <title>Comfy - furniture shop - home</title>
+    </head>
+
+    <body>
+        <header class="home-header">
+            <div class="container">
+                <div class="header-top-row">
+                    <nav class="header-nav">
+                        <a href="index.html">Home</a>
+                        <a href="pages/product.html">Product</a>
+                        <a href="pages/about.html">About</a>
+                    </nav>
+                    <div class="header-logo">comfy</div>
+                    <div class="header-cart">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span id="cart-products-count"></span>
+                    </div>
+                </div>
+
+                <div class="header-greetings">
+                    <div class="greetings-one">Rest, Relax, Unwind</div>
+                    <div class="greetings-two">Embrace your choices - we do</div>
+                    <a href="pages/product.html" class="shop-now-btn">Shop Now</a>
+                </div>
+            </div>
+        </header>
+
+        <section class="home-featured">
+            <div class="container">
+                <h2 class="section-title-text">Featured</h2>
+
+                <ul class="featured-products">
+                    <!-- Data will be added dynamically -->
+                </ul>
+
+                <a href="pages/product.html" class="all-products-btn">All products</a>
+            </div>
+        </section>
+
+        <iframe src="pages/shopping-cart-widget.html" frameborder="0" class="shopping-cart-iframe"></iframe>
+    </body>
+
+    <script type="module" src="src/indexPage.js"></script>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://kit.fontawesome.com/1d2dc94d3e.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="../styles/normalize.css">
+        <link rel="stylesheet" href="../styles/styles.css">
+        <title>Comfy - furniture shop - product</title>
+    </head>
+
+    <body>
+        <header class="header">
+            <div class="container">
+                <div class="header-top-row">
+                    <nav class="header-nav">
+                        <a href="../index.html">Home</a>
+                        <a href="product.html">Product</a>
+                        <a href="about.html">About</a>
+                    </nav>
+                    <div class="header-logo">comfy</div>
+                    <div class="header-cart">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span id="cart-products-count"></span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="page-title">
+            <div class="container">
+                <div class="page-title-text">Home / Products</div>
+            </div>
+        </section>
+
+        <section class="products-content">
+            <div class="container">
+                <aside class="products-filters">
+                    <input type="text" placeholder="Search..." id="products-filter-product-name">
+
+                    <div class="products-filter-company">
+                        <h3 class="products-filter-header">Company</h3>
+                        <ul class="products-filter-company-list">
+                            <!-- Data will be added dynamically -->
+                        </ul>
+                    </div>
+
+                    <div class="products-filter-price">
+                        <h3 class="products-filter-header">Price</h3>
+                        <input type="range" id="price-range" name="price-range" min="0" max="100">
+                        <div>
+                            Value : $<span id="price-filter-value"></span>
+                        </div>
+                    </div>
+                </aside>
+                
+                <ul class="products-cards">
+                    <!-- Data will be added dynamically -->
+                </ul>
+            </div>
+        </section>
+
+        <iframe src="shopping-cart-widget.html" frameborder="0" class="shopping-cart-iframe"></iframe>
+    </body>
+
+    <script type="module" src="../src/productPage.js"></script>
+</html>
