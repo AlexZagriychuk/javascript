@@ -11,7 +11,7 @@
 .home-header {
     background-image: url("../resources/hanny-naibaho-TQ3d20m1osc-unsplash.jpg");
     background-repeat: no-repeat;
-    background-position: 50% 100%;
+    background-position: 50% 60%;
     background-size: cover;
     color: white;
 }
@@ -584,21 +584,15 @@
 /* --------------------------------- */
 /* ------    Media queries     ----- */
 /* --------------------------------- */
-@media screen and (min-width: 5760px) {
-	.home-header {
-        background-position: 50% 60%;
-    }
-}
-
 @media screen and (max-width: 3840px) {
 	.home-header {
-        background-position: 50% 70%;
+        background-position: 50% 65%;
     }
 }
 
 @media screen and (max-width: 2880px) {
 	.home-header {
-        background-position: 50% 80%;
+        background-position: 50% 75%;
     }
 }
 
@@ -606,9 +600,9 @@
     .header-greetings {
         padding: 250px 0;
     }
-    
+
     .home-header {
-        background-position: 50% 90%;
+        background-position: 50% 80%;
     }
 }
 
@@ -618,7 +612,7 @@
     }
     
     .home-header {
-        background-position: 50% 100%;
+        background-position: 50% 85%;
     }
 
     .page-title {
@@ -633,6 +627,10 @@
 @media screen and (max-width: 1200px) {
     .header-greetings {
         padding: 150px 0;
+    }
+
+    .home-header {
+        background-position: 50% 100%;
     }
     
     .page-title {
