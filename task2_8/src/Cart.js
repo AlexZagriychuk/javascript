@@ -6,6 +6,7 @@ export default class Cart {
         this.cartIconElem = document.querySelector(".header-cart")
         this.cartProductsCountElem = document.getElementById("cart-products-count")
         this.cartIFrameElem = document.querySelector("iframe.shopping-cart-iframe")
+        this.shoppingCartPageElem = this.cartIFrameElem.contentDocument.querySelector(".shopping-cart-page")
         this.closeShoppingCartBtnElem = this.cartIFrameElem.contentDocument.getElementById("close-shopping-cart-btn")
         this.shoppingCartItemsListElem = this.cartIFrameElem.contentDocument.querySelector(".shopping-cart-items")
         this.shoppingCartTotalElem = this.cartIFrameElem.contentDocument.getElementById("shopping-cart-total")
@@ -47,10 +48,12 @@ export default class Cart {
     handleCartSideBarActivation() {
         this.cartIFrameElem.classList.add("active")
         this.renderCartSidebarData()
+        this.shoppingCartPageElem.classList.add("active")
     }
 
     handleCartSideBarClose() {
-        this.cartIFrameElem.classList.remove("active")    
+        this.shoppingCartPageElem.classList.remove("active")
+        this.cartIFrameElem.classList.remove("active") 
     }
 
     renderCartSidebarData() {
