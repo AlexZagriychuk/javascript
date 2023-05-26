@@ -41,7 +41,7 @@ export default class Cart {
         this.renderCartTotalCount(comfyCartTotal)
     }
 
-    renderCartTotalCount(cartTotalCount = parseInt(localStorage.getItem("comfy-cart-total"))) {
+    renderCartTotalCount(cartTotalCount = parseInt(localStorage.getItem("comfy-cart-total") || 0)) {
         this.cartProductsCountElem.innerText = cartTotalCount
     }
 
