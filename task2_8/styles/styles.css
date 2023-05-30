@@ -1,3 +1,8 @@
+body {
+    width: 100vw;
+    overflow-x: hidden;
+}
+
 .container {
     margin: 0 auto;
     padding: 0 10px;
@@ -416,6 +421,7 @@
     flex-direction: column;
 
     transition: right 500ms;
+    transition-timing-function: ease-in-out;
 }
 
 .shopping-cart-page.active .shopping-cart {
