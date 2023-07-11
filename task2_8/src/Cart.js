@@ -17,6 +17,10 @@ export default class Cart {
 
         this.renderCartTotalCount()
         this.cartIconElem.addEventListener("click", () => this.handleCartSideBarActivation())
+
+        console.log("this.cartIFrameElem", this.cartIFrameElem)
+        console.log("this.closeShoppingCartBtnElem", this.closeShoppingCartBtnElem)
+
         this.closeShoppingCartBtnElem.addEventListener("click", () => this.handleCartSideBarClose())
     }
 
